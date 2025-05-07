@@ -188,11 +188,16 @@ function playCardToFront() {
     // Update played cards area
     updatePlayedCardsUI();
     
-    // Notify other players if host
-    if (gameMode === 'host') {
-        sendGameUpdate('card_played', { 
-            playerId: peer.id,
-            cardId: playedCard.id
+    // Notify other players
+    if (connections.length > 0) {
+        connections.forEach(conn => {
+            conn.send({
+                type: 'card_played',
+                playerId: peer.id,
+                cardId: playedCard.id,
+                handSize: playerHand.length,
+                playedCards: playerPlayedCards
+            });
         });
     }
     

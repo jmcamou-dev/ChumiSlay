@@ -328,6 +328,48 @@ function updateOpponentHandsUI() {
         opponentHand.appendChild(cardsContainer);
         opponentHandArea.appendChild(opponentHand);
     });
+    
+    // Update played cards area for opponents
+    updateOpponentPlayedCards();
+}
+
+/**
+ * Updates the played cards for all opponents
+ */
+function updateOpponentPlayedCards() {
+    // Clear all opponent played cards containers
+    const oldContainers = document.querySelectorAll('.played-cards-container:not([data-player="' + peer.id + '"])');
+    oldContainers.forEach(container => container.remove());
+    
+    // Add played cards for each opponent
+    connectedPlayers.forEach(player => {
+        if (!player.playedCards || player.playedCards.length === 0) return;
+        
+        // Create container for this player's played cards
+        const container = document.createElement('div');
+        container.className = 'played-cards-container';
+        container.setAttribute('data-player', player.id);
+        
+        const label = document.createElement('div');
+        label.className = 'player-label';
+        label.textContent = player.name;
+        label.style.color = player.color || 'white';
+        
+        const cardsDiv = document.createElement('div');
+        cardsDiv.className = 'cards-row';
+        
+        // Add each played card
+        player.playedCards.forEach(card => {
+            const cardElement = createCardElement(card.id, CARD_TYPES.MAIN, card.imageUrl);
+            cardElement.classList.add('flipped'); // Show face up
+            cardsDiv.appendChild(cardElement);
+        });
+        
+        container.appendChild(label);
+        container.appendChild(cardsDiv);
+        
+        uiElements.playedCardsArea.appendChild(container);
+    });
 }
 
 /**

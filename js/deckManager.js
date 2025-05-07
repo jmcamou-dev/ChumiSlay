@@ -103,6 +103,8 @@ function dealInitialCards() {
         const card = drawCard(true);
         if (card) {
             specialCardsInPlay[i] = card;
+            // Show special cards to host
+            addSpecialCard(card, i);
         }
     }
     

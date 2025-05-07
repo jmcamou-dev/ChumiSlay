@@ -325,6 +325,11 @@ function handleIncomingData(conn, data) {
             // Another player played a card
             handleCardPlayed(data.playerId, data.cardId);
             
+            // Update player's played cards if provided
+            if (data.playedCards) {
+                updatePlayerPlayedCards(data.playerId, data.playedCards);
+            }
+            
             // Update opponent hand size
             updateOpponentHandSize(data.playerId, data.handSize || 0);
             break;
@@ -346,6 +351,29 @@ function handleIncomingData(conn, data) {
             // Card was taken from player
             showMessage(`${getPlayerName(data.playerId)} took a card from ${getPlayerName(data.targetPlayerId)}`, 'info');
             break;
+            
+        case 'played_cards_update':
+            // Update a player's played cards
+            updatePlayerPlayedCards(data.playerId, data.playedCards);
+            updateOpponentHandsUI();
+            break;
+    }
+}
+
+/**
+ * Updates a player's played cards
+ * @param {string} playerId - Player ID
+ * @param {Array} playedCards - The played cards
+ */
+function updatePlayerPlayedCards(playerId, playedCards) {
+    // Find player
+    const player = connectedPlayers.find(p => p.id === playerId);
+    if (player) {
+        // Update played cards
+        player.playedCards = playedCards;
+        
+        // Update UI
+        updateOpponentPlayedCards();
     }
 }
 
@@ -434,6 +462,16 @@ function startGame() {
     gameStarted = true;
     initializeDecks();
     initializeUI();
+    
+    // Initialize special cards for the host
+    for (let i = 0; i < specialCardsInPlay.length; i++) {
+        if (specialCardsInPlay[i]) {
+            addSpecialCard(specialCardsInPlay[i], i);
+        }
+    }
+    
+    // Update played cards UI
+    updatePlayedCardsUI();
     
     // Hide waiting room
     hideWaitingRoom();
