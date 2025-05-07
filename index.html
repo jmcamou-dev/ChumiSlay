@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Game</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- PeerJS library -->
+    <script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
+</head>
+<body>
+    <div id="loading-screen">
+        <!-- Loading screen will be created by gameLoader.js -->
+    </div>
+
+    <div id="game-container" class="hidden">
+        <h1 class="game-title">Card Game</h1>
+        
+        <div id="opponent-indicator" class="opponent-indicator">
+            <!-- Opponents will be added dynamically -->
+        </div>
+        
+        <div class="special-cards-area">
+            <div class="card special-card" id="special-card-1">
+                <div class="card-inner">
+                    <div class="card-back">
+                        <img src="images/special_cards/default.png" alt="Special Card 1">
+                    </div>
+                    <div class="card-front">
+                        <!-- Card front image will be set by the game -->
+                    </div>
+                </div>
+            </div>
+            <div class="card special-card" id="special-card-2">
+                <div class="card-inner">
+                    <div class="card-back">
+                        <img src="images/special_cards/default.png" alt="Special Card 2">
+                    </div>
+                    <div class="card-front">
+                        <!-- Card front image will be set by the game -->
+                    </div>
+                </div>
+            </div>
+            <div class="card special-card" id="special-card-3">
+                <div class="card-inner">
+                    <div class="card-back">
+                        <img src="images/special_cards/default.png" alt="Special Card 3">
+                    </div>
+                    <div class="card-front">
+                        <!-- Card front image will be set by the game -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="opponent-hand-area" id="opponent-hand-area">
+            <!-- Opponent hands will be added dynamically -->
+        </div>
+        
+        <div class="played-cards-area" id="played-cards-area">
+            <!-- Player played cards will be added dynamically -->
+        </div>
+        
+        <div class="player-area">
+            <div class="player-name" id="player-name">Player 1 (You)</div>
+            <div class="player-cards" id="player-cards">
+                <!-- Player cards will be added dynamically -->
+            </div>
+            <div class="controls">
+                <button id="draw-card">Draw Card</button>
+                <button id="play-card">Play Card in Front</button>
+                <button id="take-card">Take Card</button>
+                <button id="discard-card">Discard Card</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game JavaScript Files -->
+    <script src="js/gameVariables.js"></script>
+    <script src="js/gameLoader.js"></script>
+</body>
+</html>
